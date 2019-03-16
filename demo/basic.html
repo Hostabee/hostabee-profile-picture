@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>hostabee-profile-picture demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../hostabee-profile-picture.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      .horizontal {
+        @apply --layout-horizontal;
+        @apply --layout-center;
+      }
+
+      hostabee-profile-picture {
+        margin: 5px;
+      }
+    </style>
+  </custom-style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>Basic hostabee-profile-picture demo</h3>
+    <demo-snippet>
+      <template>
+        <div class="horizontal">
+          <hostabee-profile-picture size="30"></hostabee-profile-picture>
+          <hostabee-profile-picture></hostabee-profile-picture>
+          <hostabee-profile-picture src="John Michael Doe" size="70"></hostabee-profile-picture>
+          <hostabee-profile-picture src="John Michael Doe" size="90"></hostabee-profile-picture>
+          <hostabee-profile-picture src="https://image.flaticon.com/icons/svg/219/219988.svg" size=70></hostabee-profile-picture>
+          <hostabee-profile-picture src="https://image.flaticon.com/icons/svg/219/219988.svg"></hostabee-profile-picture>
+          <hostabee-profile-picture src="john.doe@example.org" size="30"></hostabee-profile-picture>
+        </div>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
+</html>

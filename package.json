@@ -1,0 +1,33 @@
+{
+  "name": "hostabee-profile-picture",
+  "version": "1.0.0",
+  "description": "A profile picture generator in a Web Component.",
+  "main": "hostabee-profile-picture.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "polymer test",
+    "prestart": "polymer analyze hostabee-* > analysis.json",
+    "start": "polymer serve --port 3000 --open",
+    "release": "standard-version",
+    "release:major": "standard-version --release-as major",
+    "release:minor": "standard-version --release-as minor",
+    "release:patch": "standard-version --release-as patch"
+  },
+  "keywords": [
+    "hostabee",
+    "profile",
+    "picture",
+    "profile-picture",
+    "polymer",
+    "webcomponents",
+    "web-component"
+  ],
+  "author": "Hostabee SAS",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "commitizen": "^3.0.7",
+    "standard-version": "^5.0.1"
+  }
+}

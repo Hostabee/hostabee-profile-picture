@@ -1,0 +1,280 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+
+<dom-module id="hostabee-profile-picture">
+  <template>
+    <style>
+      :host {
+        height: 50px;
+        width: 50px;
+        font-size: 1.6em;
+        color: #ffffff;
+        border-radius: 50%;
+        @apply --layout-vertical;
+        @apply --layout-center-center;
+      }
+
+      img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .initials {
+        vertical-align: middle;
+        vertical-align: -webkit-baseline-middle;
+      }
+    </style>
+
+    <template is="dom-if" if="[[profile.picture.url]]" restamp>
+      <img src="[[profile.picture.url]]" alt="[[profile.picture.alt]]">
+    </template>
+    <template is="dom-if" if="[[!profile.picture.url]]" restamp>
+      <span class="initials">[[profile.picture.content]]</span>
+    </template>
+
+  </template>
+
+  <script>
+    /**
+     * `hostabee-profile-picture`
+     * 
+     * A profile picture generator. Displays the image target by the given URL
+     * or generate one using a string (like username, email address, etc..).
+     *
+     * @summary A profile picture generator.
+     * @customElement
+     * @polymer
+     * @extends {Polymer.Element}
+     * @demo demo/basic.html Basic
+     * @demo demo/with-user-object.html With user object
+     */
+    class HostabeeProfilePicture extends Polymer.Element {
+
+      static get is() {
+        return 'hostabee-profile-picture';
+      }
+
+      static get properties() {
+        return {
+          /**
+           * Picture size, in pizels.
+           * 
+           * @type {Number}
+           */
+          size: {
+            type: Number,
+            value: 50,
+            observer: '_sizeChanged',
+          },
+          /**
+           * Source to be used to display a profile picture. It can be an object
+           * such as a user representation. In this case, the element will
+           * use `profilePictureURL`, `fullname`, `name` and `email` to compute
+           * the picture. It can aslo be a random string but it's preferable to
+           * provide a URL, a fullname or an email address.
+           * 
+           * _Examples:_
+           * 
+           * src = "John Doe"
+           * 
+           * src = "john.doe[at]example.org"
+           * 
+           * src = "https://my-site.com/my-profile-picture.svg"
+           * 
+           * src = {
+           *    fullname: "John Doe",
+           *    profilePictureURL: "https://john-doe.com/profile-picture.svg"
+           * }
+           * 
+           * @type {Object | String} 
+           */
+          src: {
+            type: Object,
+            value: null,
+            observer: '_srcChanged',
+          },
+          /**
+           * Computed user profile.
+           * 
+           * @type {Object}
+           */
+          profile: {
+            type: Object,
+            readOnly: true,
+            value: {},
+          },
+        };
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is
+       * initialized.
+       */
+      ready() {
+        super.ready();
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          this._sizeChanged(this.size);
+        });
+      }
+
+      /**
+       * Converts any string into hexadecimal color.
+       * 
+       * @param {String} s The string to be converted into a color
+       * @return {String} An hexadecimal code of 6 digits that represent a color.
+       */
+      stringToColor(s) {
+        return '#' + this.__intToRGB(this.__hashCode(s));
+      }
+
+      /**
+       * Gets the user name. In the order, check the `fullname` property then
+       * the `name` and the `email` address.
+       * 
+       * @param {Object} user The user to get/find a username.
+       * @return {String} A username.
+       */
+      getUsername(user) {
+        if (!user) {
+          return '?';
+        }
+        let username = typeof user == 'string' ? user :
+          (user.fullname || user.name || user.email);
+        if (!username) {
+          return 'Anonymous';
+        }
+        var parts = username.split('@')[0].split(/[\.\-_\+]/);
+        if (parts.length > 2) {
+          parts = [parts[0], parts[parts.length - 1]];
+        }
+        return parts.join(' ');
+      }
+
+      /**
+       * Resizes the picture.
+       * 
+       * @private
+       * @param {Number} size The size to be set to the picture.
+       */
+      _sizeChanged(size) {
+        this.style.setProperty('height', `${size}px`);
+        this.style.setProperty('width', `${size}px`);
+        let img = this.shadowRoot.querySelector('img');
+        if (img) {
+          img.style.setProperty('height', `${size}px`);
+          img.style.setProperty('width', `${size}px`);
+        } else {
+          this.style.setProperty('font-size', `${size * 0.032}em`);
+        }
+      }
+
+      /**
+       * Extracts initials from a name or an address email. Basically, the first
+       * letters of the first and the last word of a string, uppercase.
+       * 
+       * _Examples:_
+       * 
+       * "John Doe" = "JD"
+       * 
+       * "John David Mike Doe" = "JD"
+       * 
+       * "peter parker" = "PP"
+       * 
+       * "john.doe[at]example.org" = "JD"
+       * 
+       * @private
+       * @param {String} name The name/adress email to get the initials from.
+       * @return {String} The first letters of the first and the last word of a
+       * string, uppercase.
+       */
+      _computeInitials(name) {
+        var parts = name.split(/[\s\-_\+]/);
+        if (parts.length > 2) {
+          parts = [parts[0], parts[parts.length - 1]];
+        }
+        return parts.map((part) => part[0]).join('').toUpperCase();
+      }
+
+      /**
+       * @private
+       * @param {Object} src
+       */
+      _srcChanged(src) {
+        var profile = this.__computeProfile(src);
+        if (profile.picture.backgroundColor) {
+          this.style.setProperty('background', profile.picture.backgroundColor);
+        }
+        this._setProfile(profile);
+      }
+
+      /**
+       * @private
+       * @param {Object} src
+       */
+      __computeProfile(src) {
+        if (typeof src == 'string') {
+          if (src.startsWith('http')) {
+            // The source is a URL
+            return {
+              picture: {
+                url: src,
+                alt: 'profile picture',
+              }
+            };
+          } else {
+            // The source is a string (fullname or name)
+            return {
+              picture: {
+                backgroundColor: this.stringToColor(src),
+                content: this._computeInitials(this.getUsername(src)),
+              }
+            };
+          }
+        } else {
+          // The source is a user representation
+          let username = this.getUsername(src);
+          if (src && src.profilePictureURL) {
+            return {
+              name: username,
+              picture: {
+                url: src.profilePictureURL,
+                alt: `${username}'s profile picture`,
+              }
+            };
+          } else {
+            return {
+              name: username,
+              picture: {
+                backgroundColor: this.stringToColor(username),
+                content: this._computeInitials(username),
+              }
+            };
+          }
+        }
+      }
+
+      /**
+       * @private
+       */
+      __hashCode(str) {
+        var hash = 0;
+        for (var i = 0; i < str.length; i++) {
+          hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return hash;
+      }
+
+      /**
+       * @private
+       */
+      __intToRGB(i) {
+        var c = (i & 0x00FFFFFF).toString(16).toUpperCase();
+        return "00000".substring(0, 6 - c.length) + c;
+      }
+
+    }
+
+    window.customElements.define(HostabeeProfilePicture.is, HostabeeProfilePicture);
+  </script>
+</dom-module>

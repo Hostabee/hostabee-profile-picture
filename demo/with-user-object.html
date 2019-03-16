@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>hostabee-profile-picture demo</title>
+
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../hostabee-profile-picture.html">
+
+  <custom-style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+    </style>
+  </custom-style>
+</head>
+
+<body>
+  <div class="vertical-section-container centered">
+    <h3>With user object hostabee-profile-picture demo</h3>
+    <demo-snippet>
+      <template>
+        <h4>Using user fullname/name</h4>
+        <hostabee-profile-picture id="profile-1"></hostabee-profile-picture>
+
+        <h4>Using user email address</h4>
+        <hostabee-profile-picture id="profile-2"></hostabee-profile-picture>
+
+        <h4>Using user profile picture</h4>
+        <hostabee-profile-picture id="profile-3"></hostabee-profile-picture>
+        <script>
+          const profile1 = document.querySelector('#profile-1');
+          profile1.src = {
+            fullname: 'John Doe',
+          };
+
+          const profile2 = document.querySelector('#profile-2');
+          profile2.src = {
+            email: 'john.doe@example.org',
+          };
+
+          const profile3 = document.querySelector('#profile-3');
+          profile3.src = {
+            name: 'John Doe',
+            profilePictureURL: 'https://image.flaticon.com/icons/svg/219/219988.svg',
+          };
+        </script>
+      </template>
+    </demo-snippet>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>hostabee-profile-picture test</title>
+
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../hostabee-profile-picture.html">
+</head>
+
+<body>
+
+  <test-fixture id="BasicTestFixture">
+    <template>
+      <hostabee-profile-picture></hostabee-profile-picture>
+    </template>
+  </test-fixture>
+
+  <script>
+    describe('Basic', () => {
+      let element;
+
+      before(function() {
+        element = fixture('BasicTestFixture');
+      });
+
+      it('should display interrogation mark when no source provided', function(done) {
+        flush(function() {
+          const span = element.shadowRoot.querySelector('.initials');
+          expect(element.profile.name).to.be.equal('?');
+          expect(span.innerText).to.be.equal('?');
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.undefined;
+          expect(picture.alt).to.be.undefined;
+          expect(picture.backgroundColor).to.be.defined;
+          expect(picture.content).to.be.equal('?');
+          done();
+        });
+      });
+
+      it('should display user name initials', function(done) {
+        element.src = 'John McLane Doe';
+        flush(function() {
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.undefined;
+          expect(picture.alt).to.be.undefined;
+          expect(picture.backgroundColor).to.be.defined;
+          expect(picture.content).to.be.equal('JD');
+          const span = element.shadowRoot.querySelector('.initials');
+          expect(span.innerText).to.be.equal('JD');
+          done();
+        });
+      });
+
+      it('should be able to compute initials from email address', function(done) {
+        element.src = 'peter-parker@spider-man.universe';
+        flush(function() {
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.undefined;
+          expect(picture.alt).to.be.undefined;
+          expect(picture.backgroundColor).to.be.defined;
+          expect(picture.content).to.be.equal('PP');
+          const span = element.shadowRoot.querySelector('.initials');
+          expect(span.innerText).to.be.equal('PP');
+          done();
+        });
+      });
+
+      it('should be able to consume profile picture URL', function(done) {
+        element.src = 'https://image.flaticon.com/icons/svg/219/219988.svg';
+        flush(function() {
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.equal('https://image.flaticon.com/icons/svg/219/219988.svg');
+          expect(picture.alt).to.be.defined;
+          expect(picture.backgroundColor).to.be.undefined;
+          expect(picture.content).to.be.undefined;
+          expect(element.shadowRoot.querySelector('.initials')).to.be.null;
+          expect(element.shadowRoot.querySelector('img')).to.not.be.null;
+          done();
+        });
+      });
+
+      it('should user fullname, name and email address in this order to compute username', function() {
+        element.src = {
+          fullname: 'Clark Kent',
+          name: 'Kent',
+          email: 'clark.kent@super.man',
+        };
+        expect(element.profile.name).to.be.equal('Clark Kent');
+        element.src = {
+          name: 'Kent',
+          email: 'clark.kent@super.man',
+        };
+        expect(element.profile.name).to.be.equal('Kent');
+        element.src = {
+          email: 'clark.kent@super.man',
+        };
+        expect(element.profile.name).to.be.equal('clark kent');
+      });
+
+      it('should use profile picture URL when provided', function(done) {
+        element.src = {
+          fullname: 'Clark Kent',
+          profilePictureURL: 'https://image.flaticon.com/icons/svg/219/219988.svg',
+        };
+        flush(function() {
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.equal('https://image.flaticon.com/icons/svg/219/219988.svg');
+          expect(picture.alt).to.be.defined;
+          expect(picture.backgroundColor).to.be.undefined;
+          expect(picture.content).to.be.undefined;
+          expect(element.shadowRoot.querySelector('.initials')).to.be.null;
+          const img = element.shadowRoot.querySelector('img');
+          expect(img).to.not.be.null;
+          expect(img.alt).to.be.equal("Clark Kent's profile picture");
+          done();
+        });
+      });
+
+      it('should generate profile picture when no URL provided', function(done) {
+        element.src = {
+          fullname: 'Tony Stark',
+        };
+        flush(function() {
+          const picture = element.profile.picture;
+          expect(picture.url).to.be.undefined
+          expect(picture.alt).to.be.undefined;
+          expect(picture.backgroundColor).to.be.defined;
+          expect(picture.content).to.be.equal('TS');
+          const span = element.shadowRoot.querySelector('.initials');
+          expect(span.innerText).to.be.equal('TS');
+          expect(element.shadowRoot.querySelector('img')).to.be.null;
+          done();
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
