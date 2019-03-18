@@ -2,9 +2,26 @@
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Build Status](https://travis-ci.org/Hostabee/hostabee-profile-picture.svg?branch=master)](https://travis-ci.org/Hostabee/hostabee-profile-picture)
-
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/hostabee/hostabee-profile-picture)
 
 A profile picture generator in a Web Component. Displays the image target by the given URL or generate one using a string (like username, email address, etc..).
+
+<!--
+```
+<custom-element-demo height="400">
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="hostabee-profile-picture.html">
+    <next-code-block></next-code-block>
+    <style>
+      hostabee-profile-picture {
+        margin: 8px;
+      }
+    </style>
+  </template>
+</custom-element-demo>
+```
+-->
 
 ```html
 <hostabee-profile-picture></hostabee-profile-picture>
