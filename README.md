@@ -1,7 +1,7 @@
 # \<hostabee-profile-picture\>
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Build Status](https://travis-ci.org/Hostabee/hostabee-profile-picture.svg?branch=master)](https://travis-ci.org/Hostabee/hostabee-profile-picture)
+[![Build Status](https://travis-ci.org/Hostabee/hostabee-profile-picture.svg?branch=master)](https://travis-ci.org/Hostabee/hostabee-profile-picture) [![Greenkeeper badge](https://badges.greenkeeper.io/Hostabee/hostabee-profile-picture.svg)](https://greenkeeper.io/)
 
 
 A profile picture generator in a Web Component. Displays the image target by the given URL or generate one using a string (like username, email address, etc..).
