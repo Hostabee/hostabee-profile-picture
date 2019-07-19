@@ -1,6 +1,6 @@
 {
   "name": "hostabee-profile-picture",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A profile picture generator in a Web Component.",
   "main": "hostabee-profile-picture.html",
   "directories": {
