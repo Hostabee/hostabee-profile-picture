@@ -1,7 +1,9 @@
 # \<hostabee-profile-picture\>
 
+[![Build Status](https://travis-ci.org/Hostabee/hostabee-profile-picture.svg?branch=master)](https://travis-ci.org/Hostabee/hostabee-profile-picture)
+[![Sauce Test Status](https://saucelabs.com/buildstatus/mlouchart)](https://app.saucelabs.com/u/mlouchart)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Build Status](https://travis-ci.org/Hostabee/hostabee-profile-picture.svg?branch=master)](https://travis-ci.org/Hostabee/hostabee-profile-picture) [![Greenkeeper badge](https://badges.greenkeeper.io/Hostabee/hostabee-profile-picture.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Hostabee/hostabee-profile-picture.svg)](https://greenkeeper.io/)
 
 
 A profile picture generator in a Web Component. Displays the image target by the given URL or generate one using a string (like username, email address, etc..).
@@ -66,3 +68,13 @@ Once installed, import it in your application:
 ## License
 
 Apache License 2.0
+
+## Big Thanks
+
+Cross-browser Testing Platform and Open Source ❤️Provided by:
+<!-- Yes, I know. HTML inside mardown file... The only way to change the SVG size without open Inkscape. It could be your first good contribution to fix it! -->
+[<img src="./images/sauce_labs_badge.svg" width="150">](https://saucelabs.com)
+
+## Browsers compatibility matrix
+
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/mlouchart.svg)](https://saucelabs.com/u/mlouchart)
