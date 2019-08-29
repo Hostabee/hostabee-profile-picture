@@ -21,7 +21,7 @@ A profile picture generator in a Web Component. Displays the image target by the
 </script>
 ```
 
-![Screenshot of hostabee-profile-picture](https://raw.githubusercontent.com/Hostabee/hostabee-profile-picture/master/screenshot.png)
+![Screenshot of hostabee-profile-picture](./images/screenshot.png)
 
 ## Installation
 
