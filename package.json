@@ -27,7 +27,7 @@
   "author": "Hostabee SAS",
   "license": "Apache-2.0",
   "devDependencies": {
-    "commitizen": "^4.0.1",
+    "commitizen": "^4.0.5",
     "standard-version": "^7.0.0"
   }
 }
